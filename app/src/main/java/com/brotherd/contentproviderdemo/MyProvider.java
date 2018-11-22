@@ -16,18 +16,25 @@ public class MyProvider extends ContentProvider {
     public static final String AUTHORITY = "com.brotherd.contentproviderdemo.provider";
 
     private static UriMatcher uriMatcher;
-    private MyDbHelper dbHelper;
 
     static {
-        uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AUTHORITY, "book", BOOK_DIR);
         uriMatcher.addURI(AUTHORITY, "book/#", BOOK_ITEM);
         uriMatcher.addURI(AUTHORITY, "category", CATEGORY_DIR);
         uriMatcher.addURI(AUTHORITY, "category/#", CATEGORY_ITEM);
     }
 
+    private MyDbHelper dbHelper;
+
 
     public MyProvider() {
+    }
+
+    @Override
+    public boolean onCreate() {
+        dbHelper = new MyDbHelper(getContext(), "test.db", null, 1);
+        return true;
     }
 
     @Override
@@ -72,7 +79,7 @@ public class MyProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         Uri uriReturn = null;
         switch (uriMatcher.match(uri)) {
             case BOOK_DIR:
@@ -89,12 +96,6 @@ public class MyProvider extends ContentProvider {
                 break;
         }
         return uriReturn;
-    }
-
-    @Override
-    public boolean onCreate() {
-        dbHelper = new MyDbHelper(getContext(), "test.db", null, 1);
-        return false;
     }
 
     @Override
@@ -124,7 +125,7 @@ public class MyProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         int updatedRows = 0;
         switch (uriMatcher.match(uri)) {
             case BOOK_DIR:
