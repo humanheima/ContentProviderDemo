@@ -1,6 +1,8 @@
 package com.brotherd.testapp;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,17 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by dumingwei on 2020/4/21
+ * <p>
+ * Desc:
+ */
+public class ContentProviderBaseActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
     private String newsId;
 
+    public static void launch(Context context) {
+        Intent starter = new Intent(context, ContentProviderBaseActivity.class);
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_content_provider_base);
     }
 
     public void add(View view) {
