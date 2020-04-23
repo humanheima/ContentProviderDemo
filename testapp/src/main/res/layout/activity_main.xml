@@ -21,4 +21,12 @@
         android:text="使用Calendar"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btnTestTargetApi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试TargetApi"
+        android:textAllCaps="false" />
+
+
 </LinearLayout>

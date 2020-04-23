@@ -1,7 +1,10 @@
 package com.brotherd.testapp
 
+import android.annotation.TargetApi
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -20,5 +23,15 @@ class MainActivity : AppCompatActivity() {
         btnUseCalendar.setOnClickListener {
             UseCalendarActivity.launch(this)
         }
+
+        btnTestTargetApi.setOnClickListener {
+            testTargetApi()
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.P)
+    fun testTargetApi() {
+        Toast.makeText(this, "版本：" + Build.VERSION.SDK_INT, Toast.LENGTH_SHORT).show()
     }
 }

@@ -34,4 +34,28 @@
         android:onClick="update"
         android:text="更新日历事件" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="使用日历Intent"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_add_by_intent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="update"
+        android:text="跳转到日历程序添加日历事件"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_update_by_intent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="update"
+        android:text="跳转到日历程序更新日历事件"
+        android:textAllCaps="false" />
+
 </LinearLayout>

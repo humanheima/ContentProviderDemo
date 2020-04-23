@@ -76,6 +76,13 @@ class UseCalendarActivity : AppCompatActivity(), EasyPermissions.PermissionCallb
                         requestCode, Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR)
             }
         }
+
+        btn_add_by_intent.setOnClickListener {
+            CalenderUtil.insertEventByIntent(this)
+        }
+        btn_update_by_intent.setOnClickListener {
+            CalenderUtil.updateEventByIntent(this)
+        }
     }
 
     private fun updateCalendarEvent() {
@@ -111,14 +118,18 @@ class UseCalendarActivity : AppCompatActivity(), EasyPermissions.PermissionCallb
     }
 
     private fun addCalendarEvent() {
-        val success = CalendarReminderUtils.addCalendarEvent(this, "日历事件", "日历事件描述",
+        /*val success = CalendarReminderUtils.addCalendarEvent(this, "日历事件", "日历事件描述",
                 System.currentTimeMillis() + weekMillis, 7)
         if (success) {
             Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show()
 
         } else {
             Toast.makeText(this, "添加失败", Toast.LENGTH_SHORT).show()
-        }
+        }*/
+
+
+        CalenderUtil.addCalendarEvent(this, "日历事件标题")
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -17,14 +17,9 @@ public class CalendarReminderUtils {
 
     private static final String TAG = "CalendarReminderUtils";
 
-    private static String CALENDER_URL = "content://com.android.calendar/calendars";
+    private static Uri CALENDER_URL = CalendarContract.Calendars.CONTENT_URI;
     private static Uri CALENDER_EVENT_URL = CalendarContract.Events.CONTENT_URI;
     private static Uri CALENDER_REMINDER_URL = CalendarContract.Reminders.CONTENT_URI;
-
-    private static String CALENDARS_NAME = "boohee";
-    private static String CALENDARS_ACCOUNT_NAME = "BOOHEE@boohee.com";
-    private static String CALENDARS_ACCOUNT_TYPE = "com.android.boohee";
-    private static String CALENDARS_DISPLAY_NAME = "BOOHEE账户";
 
     /**
      * 检查是否已经添加了日历账户，如果没有添加先添加一个日历账户再查询
@@ -48,7 +43,7 @@ public class CalendarReminderUtils {
      * 检查是否存在现有账户，存在则返回账户id，否则返回-1
      */
     private static int checkCalendarAccount(Context context) {
-        Cursor userCursor = context.getContentResolver().query(Uri.parse(CALENDER_URL),
+        Cursor userCursor = context.getContentResolver().query(CALENDER_URL,
                 null, null, null, null);
         try {
             if (userCursor == null) { //查询返回空值
@@ -74,9 +69,13 @@ public class CalendarReminderUtils {
     private static long addCalendarAccount(Context context) {
         TimeZone timeZone = TimeZone.getDefault();
         ContentValues value = new ContentValues();
+        String CALENDARS_NAME = "boohee";
         value.put(CalendarContract.Calendars.NAME, CALENDARS_NAME);
+        String CALENDARS_ACCOUNT_NAME = "BOOHEE@boohee.com";
         value.put(CalendarContract.Calendars.ACCOUNT_NAME, CALENDARS_ACCOUNT_NAME);
+        String CALENDARS_ACCOUNT_TYPE = "com.android.boohee";
         value.put(CalendarContract.Calendars.ACCOUNT_TYPE, CALENDARS_ACCOUNT_TYPE);
+        String CALENDARS_DISPLAY_NAME = "BOOHEE账户";
         value.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, CALENDARS_DISPLAY_NAME);
         value.put(CalendarContract.Calendars.VISIBLE, 1);
         value.put(CalendarContract.Calendars.CALENDAR_COLOR, Color.BLUE);
@@ -86,7 +85,7 @@ public class CalendarReminderUtils {
         value.put(CalendarContract.Calendars.OWNER_ACCOUNT, CALENDARS_ACCOUNT_NAME);
         value.put(CalendarContract.Calendars.CAN_ORGANIZER_RESPOND, 0);
 
-        Uri calendarUri = Uri.parse(CALENDER_URL);
+        Uri calendarUri = CALENDER_URL;
         calendarUri = calendarUri.buildUpon()
                 .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
                 .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, CALENDARS_ACCOUNT_NAME)
@@ -236,4 +235,5 @@ public class CalendarReminderUtils {
         int rows = context.getContentResolver().update(CALENDER_EVENT_URL, contentValues, selection, selectionArgs);
         return rows;
     }
+
 }
